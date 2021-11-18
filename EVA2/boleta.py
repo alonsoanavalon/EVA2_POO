@@ -1,5 +1,3 @@
-from EVA2.producto import Producto
-
 class Boleta:
     def __init__(self, numero, producto, cantidad, precio):
         self.numero = numero

@@ -1,5 +1,5 @@
-from EVA2.producto import Producto
-from EVA2.boleta import Boleta
+from EVA2_POO.EVA2.producto import Producto
+from EVA2_POO.EVA2.boleta import Boleta
 
 
 #Antes de agregarlo deberíamos hacer las comprobaciones correspondientes
@@ -42,9 +42,24 @@ while True:
     print("4. Salir/Finalizar")
     opcion = int(input("Ingrese una opción (1-4): "))
     if opcion==1:
-        print("Agregando producto")
+        print("\nAgregando producto...")
+        nuevoProductoId = len(listaProductos)+1
+        print("\nID nuevo producto: ", nuevoProductoId)
+        nombre = input("Ingrese nombre del producto: ")
+        precio = int(input("Ingrese precio: "))
+        stock = int(input("Ingrese stock: "))
+        nuevoProducto = Producto(nuevoProductoId, nombre, precio, stock)
+        print("\nNuevo producto agregado: ", nuevoProducto)
+        listaProductos.append(nuevoProducto)
     elif opcion==2:
         print("Actualizando precio")
+        print("1. Buscar por ID")
+        print("2. Buscar por Nombre")
+        buscar = int(input("Ingrese opción (1-2): "))
+        if buscar==1:
+            idBuscar = int(input("Ingrese ID: "))
+            for producto in listaProductos:
+                print(producto)
     elif opcion==3:
         print("Generando boleta")
 
