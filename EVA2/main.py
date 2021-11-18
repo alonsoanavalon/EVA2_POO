@@ -42,13 +42,7 @@ listaProductos.append(desatornillador)
 diablo = Producto(10, "Diablo", 8000, 50)
 listaProductos.append(diablo)
 
-<<<<<<< HEAD
 listaBoleta = []
-=======
-boletita2 = Boleta(1, pintura, 3)
-print(boletita2.mostrarBoleta())
-
->>>>>>> ccdd0b7696c87e2db47dbc3f5012701ba37b6672
 
 for producto in listaProductos:
     print(producto.mostrarProducto())
