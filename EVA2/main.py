@@ -4,7 +4,7 @@ from EVA2.boleta import Boleta
 
 #Antes de agregarlo deberíamos hacer las comprobaciones correspondientes
 
-def validarNumero (pregunta):
+def validarNumero(pregunta):
     while True:
         try:
             numero = int(input(pregunta))
@@ -18,6 +18,10 @@ def validarNumero (pregunta):
         else:
             break
     return numero
+
+def mostrarProductos(listaProductos):
+    for producto in listaProductos:
+        print(producto.mostrarProducto())
 
 listaProductos = []
 
@@ -43,9 +47,9 @@ diablo = Producto(10, "diablo", 8000, 50)
 listaProductos.append(diablo)
 
 listaBoleta = []
+numBoleta = len(listaBoleta)
 
-for producto in listaProductos:
-    print(producto.mostrarProducto())
+mostrarProductos(listaProductos)
 
 
 while True:
@@ -102,6 +106,8 @@ while True:
         print("2. Seleccionar producto por Nombre")
         buscar = int(input("Ingrese opción (1-2): "))
         numBoleta = len(listaBoleta) + 1
+        #while true
+        mostrarProductos(listaProductos)
 
         if buscar == 1:
             idBuscar = validarNumero("Ingrese ID:")
@@ -113,6 +119,7 @@ while True:
                     if cantidadStock == True:
                         articulo.restarStock(cantidad)
                         boletaGenerada = Boleta(numBoleta, articulo, cantidad)
+                        listaBoleta.append(boletaGenerada)
                         print(boletaGenerada.mostrarBoleta())
                     elif type(cantidadStock) == int:
                         res = input("{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre, cantidadStock))
@@ -120,6 +127,7 @@ while True:
                         if res == "si":
                             articulo.restarStock(cantidadStock)
                             boletaGenerada = Boleta(numBoleta, articulo, cantidadStock)
+                            listaBoleta.append(boletaGenerada)
                             print(boletaGenerada.mostrarBoleta())
                         else:
                             break
@@ -135,21 +143,24 @@ while True:
                     if cantidadStock == True:
                         articulo.restarStock(cantidad)
                         boletaGenerada = Boleta(numBoleta, articulo, cantidad)
+                        listaBoleta.append(boletaGenerada)
                         print(boletaGenerada.mostrarBoleta())
                     elif type(cantidadStock) == int:
-                        res = input(
-                            "{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre,
-                                                                                                  cantidadStock))
+                        res = input("{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre, cantidadStock))
                         res = res.lower()
                         if res == "si":
                             articulo.restarStock(cantidadStock)
                             boletaGenerada = Boleta(numBoleta, articulo, cantidadStock)
+                            listaBoleta.append(boletaGenerada)
                             print(boletaGenerada.mostrarBoleta())
                         else:
                             break
 
+
+# FALTA: -PREGUNTAR AL USUARIO POR CIERRE DE LA VENTA (AGREGAR + PRODUCTOS O FINALIZAR)
+    #    -GENERAR BOLETA DE VENTA (TRAER DATOS DE ESTA)
+    #    -3.C. - 4.B. - 4.C.
+
     else:
         print("\nProceso finalizado....")
         break
-
-
