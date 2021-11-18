@@ -26,7 +26,7 @@ class Producto:
     def restarStock (self, cantidad):
         if int(cantidad) and int(cantidad) > 0:
             self.stock -= cantidad
-            return "El stock ha sido actualizado con éxito"
+            return print ("El stock ha sido actualizado con éxito")
         else:
             error = print("El producto no ha podido ser actualizado")
             return error

@@ -21,7 +21,7 @@ def validarNumero (pregunta):
 
 listaProductos = []
 
-martillo = Producto(1, "Martillo", 3000, 50)
+martillo = Producto(1, "martillo", 3000, 50)
 listaProductos.append(martillo)
 taladro = Producto(2, "taladro", 30000, 50)
 listaProductos.append(taladro)
@@ -31,24 +31,18 @@ clavos = Producto(4, "clavos", 3000, 50)
 listaProductos.append(clavos)
 tornillos = Producto(5, "tornillos", 2500, 50)
 listaProductos.append(tornillos)
-tuboPvc = Producto(6, "tuboPvc", 4000, 50)
+tuboPvc = Producto(6, "tubo pvc", 4000, 50)
 listaProductos.append(tuboPvc)
 pintura = Producto(7, "pintura", 6000, 50)
 listaProductos.append(pintura)
-pastaMuro = Producto(8, "pastaMuro", 10000, 50)
+pastaMuro = Producto(8, "pasta muro", 10000, 50)
 listaProductos.append(pastaMuro)
 desatornillador = Producto(9, "desatornillador", 4000, 50)
 listaProductos.append(desatornillador)
-diablo = Producto(10, "Diablo", 8000, 50)
+diablo = Producto(10, "diablo", 8000, 50)
 listaProductos.append(diablo)
 
-<<<<<<< HEAD
 listaBoleta = []
-=======
-boletita2 = Boleta(1, pintura, 3)
-print(boletita2.mostrarBoleta())
-
->>>>>>> ccdd0b7696c87e2db47dbc3f5012701ba37b6672
 
 for producto in listaProductos:
     print(producto.mostrarProducto())
@@ -67,6 +61,7 @@ while True:
         nuevoProductoId = len(listaProductos)+1
         print("\nID nuevo producto: ", nuevoProductoId)
         nombre = input("\nIngrese nombre del producto: ")
+        nombre = nombre.lower()
         precio = int(input("Ingrese precio: "))
         stock = int(input("Ingrese stock: "))
         nuevoProducto = Producto(nuevoProductoId, nombre, precio, stock)
@@ -90,6 +85,7 @@ while True:
 
         if buscar == 2:
             nombreBuscar = input("Ingrese nombre: ")
+            nombreBuscar = nombreBuscar.lower()
             while type(nombreBuscar) != str:
                 nombreBuscar = input("Ingrese nombre: ")
             for articulo in listaProductos:
@@ -100,31 +96,57 @@ while True:
                     print("Precio modificado: ", articulo)
 
     elif opcion==3:
+
         print("\nGenerando boleta...")
         print("1. Seleccionar producto por ID")
         print("2. Seleccionar producto por Nombre")
         buscar = int(input("Ingrese opción (1-2): "))
         numBoleta = len(listaBoleta) + 1
+
         if buscar == 1:
             idBuscar = validarNumero("Ingrese ID:")
             for articulo in listaProductos:
                 if articulo.id == idBuscar:
                     print("Producto seleccionado", articulo)
                     cantidad = validarNumero("Ingrese cantidad: ")
-                    boletaGenerada = Boleta(numBoleta, articulo, cantidad)
-                    print(boletaGenerada.mostrarBoleta())
+                    cantidadStock = articulo.validarStock(cantidad)
+                    if cantidadStock == True:
+                        articulo.restarStock(cantidad)
+                        boletaGenerada = Boleta(numBoleta, articulo, cantidad)
+                        print(boletaGenerada.mostrarBoleta())
+                    elif type(cantidadStock) == int:
+                        res = input("{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre, cantidadStock))
+                        res = res.lower()
+                        if res == "si":
+                            articulo.restarStock(cantidadStock)
+                            boletaGenerada = Boleta(numBoleta, articulo, cantidadStock)
+                            print(boletaGenerada.mostrarBoleta())
+                        else:
+                            break
 
         if buscar == 2:
             nombreBuscar = input("Ingrese nombre: ")
-            while type(nombreBuscar) != str:
-                nombreBuscar = input("Ingrese nombre: ")
+            nombreBuscar = nombreBuscar.lower()
             for articulo in listaProductos:
                 if articulo.nombre == nombreBuscar:
                     print("Producto seleccionado", articulo)
-                else:
-                    print("Ingrese nombre válido")
-                boletaGenerada = Boleta(numBoleta, articulo, cantidad)
-                print(boletaGenerada.mostrarBoleta())
+                    cantidad = validarNumero("Ingrese cantidad: ")
+                    cantidadStock = articulo.validarStock(cantidad)
+                    if cantidadStock == True:
+                        articulo.restarStock(cantidad)
+                        boletaGenerada = Boleta(numBoleta, articulo, cantidad)
+                        print(boletaGenerada.mostrarBoleta())
+                    elif type(cantidadStock) == int:
+                        res = input(
+                            "{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre,
+                                                                                                  cantidadStock))
+                        res = res.lower()
+                        if res == "si":
+                            articulo.restarStock(cantidadStock)
+                            boletaGenerada = Boleta(numBoleta, articulo, cantidadStock)
+                            print(boletaGenerada.mostrarBoleta())
+                        else:
+                            break
 
     else:
         print("\nProceso finalizado....")
