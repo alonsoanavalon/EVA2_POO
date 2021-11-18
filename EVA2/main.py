@@ -109,9 +109,20 @@ while True:
                 if articulo.id == idBuscar:
                     print("Producto seleccionado", articulo)
                     cantidad = validarNumero("Ingrese cantidad: ")
-                    articulo.restarStock(cantidad)
-                    boletaGenerada = Boleta(numBoleta, articulo, cantidad)
-                    print(boletaGenerada.mostrarBoleta())
+                    cantidadStock = articulo.validarStock(cantidad)
+                    if cantidadStock == True:
+                        articulo.restarStock(cantidad)
+                        boletaGenerada = Boleta(numBoleta, articulo, cantidad)
+                        print(boletaGenerada.mostrarBoleta())
+                    elif type(cantidadStock) == int:
+                        res = input("{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre, cantidadStock))
+                        res = res.lower()
+                        if res == "si":
+                            articulo.restarStock(cantidadStock)
+                            boletaGenerada = Boleta(numBoleta, articulo, cantidadStock)
+                            print(boletaGenerada.mostrarBoleta())
+                        else:
+                            break
 
         if buscar == 2:
             nombreBuscar = input("Ingrese nombre: ")
@@ -120,9 +131,22 @@ while True:
                 if articulo.nombre == nombreBuscar:
                     print("Producto seleccionado", articulo)
                     cantidad = validarNumero("Ingrese cantidad: ")
-                    articulo.restarStock(cantidad)
-                    boletaGenerada = Boleta(numBoleta, articulo, cantidad)
-                    print(boletaGenerada.mostrarBoleta())
+                    cantidadStock = articulo.validarStock(cantidad)
+                    if cantidadStock == True:
+                        articulo.restarStock(cantidad)
+                        boletaGenerada = Boleta(numBoleta, articulo, cantidad)
+                        print(boletaGenerada.mostrarBoleta())
+                    elif type(cantidadStock) == int:
+                        res = input(
+                            "{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre,
+                                                                                                  cantidadStock))
+                        res = res.lower()
+                        if res == "si":
+                            articulo.restarStock(cantidadStock)
+                            boletaGenerada = Boleta(numBoleta, articulo, cantidadStock)
+                            print(boletaGenerada.mostrarBoleta())
+                        else:
+                            break
 
     else:
         print("\nProceso finalizado....")
