@@ -18,7 +18,7 @@ class Producto:
     def actualizarPrecio (self, nuevoPrecio):
         if int(self.precio) and int(nuevoPrecio) > 0:
             self.precio = nuevoPrecio
-            return "El precio ha sido actualizado con éxito"
+            return print("El precio ha sido actualizado con éxito")
         else:
             error = print("El producto no ha podido ser actualizado")
             return error
