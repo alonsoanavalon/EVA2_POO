@@ -3,8 +3,21 @@ from EVA2.boleta import Boleta
 
 
 #Antes de agregarlo deberíamos hacer las comprobaciones correspondientes
-#boletita = Boleta(1, productito, 2, productito.precio)
-#print(boletita.mostrarBoleta())
+
+def validarNumero (pregunta):
+    while True:
+        try:
+            numero = int(input(pregunta))
+        except ValueError:
+            print("Debes escribir un número.")
+            continue
+
+        if numero < 0:
+            print("Debes escribir un número positivo.")
+            continue
+        else:
+            break
+    return numero
 
 listaProductos = []
 
@@ -29,6 +42,7 @@ listaProductos.append(desatornillador)
 diablo = Producto(10, "Diablo", 8000, 50)
 listaProductos.append(diablo)
 
+listaBoleta = []
 
 for producto in listaProductos:
     print(producto.mostrarProducto())
@@ -41,29 +55,73 @@ while True:
     print("3. Generar boleta de venta")
     print("4. Salir/Finalizar")
     opcion = int(input("Ingrese una opción (1-4): "))
+
     if opcion==1:
         print("\nAgregando producto...")
         nuevoProductoId = len(listaProductos)+1
         print("\nID nuevo producto: ", nuevoProductoId)
-        nombre = input("Ingrese nombre del producto: ")
+        nombre = input("\nIngrese nombre del producto: ")
         precio = int(input("Ingrese precio: "))
         stock = int(input("Ingrese stock: "))
         nuevoProducto = Producto(nuevoProductoId, nombre, precio, stock)
         print("\nNuevo producto agregado: ", nuevoProducto)
         listaProductos.append(nuevoProducto)
+
     elif opcion==2:
-        print("Actualizando precio")
+        print("\nActualizando precio...")
         print("1. Buscar por ID")
         print("2. Buscar por Nombre")
         buscar = int(input("Ingrese opción (1-2): "))
-        if buscar==1:
-            idBuscar = int(input("Ingrese ID: "))
-            for producto in listaProductos:
-                print(producto)
+
+        if buscar == 1:
+            idBuscar = validarNumero("Ingrese ID:")
+            for articulo in listaProductos:
+                if articulo.id == idBuscar:
+                    print("Precio a modificar: ", articulo)
+                    nuevoPrecio = int(input("Ingrese nuevo precio: "))
+                    articulo.actualizarPrecio(nuevoPrecio)
+                    print("Precio modificado: ", articulo)
+
+        if buscar == 2:
+            nombreBuscar = input("Ingrese nombre: ")
+            while type(nombreBuscar) != str:
+                nombreBuscar = input("Ingrese nombre: ")
+            for articulo in listaProductos:
+                if articulo.nombre == nombreBuscar:
+                    print("Precio a modificar: ", articulo)
+                    nuevoPrecio = int(input("Ingrese nuevo precio: "))
+                    articulo.actualizarPrecio(nuevoPrecio)
+                    print("Precio modificado: ", articulo)
+
     elif opcion==3:
-        print("Generando boleta")
+        print("\nGenerando boleta...")
+        print("1. Seleccionar producto por ID")
+        print("2. Seleccionar producto por Nombre")
+        buscar = int(input("Ingrese opción (1-2): "))
+        numBoleta = len(listaBoleta) + 1
+        if buscar == 1:
+            idBuscar = validarNumero("Ingrese ID:")
+            for articulo in listaProductos:
+                if articulo.id == idBuscar:
+                    print("Producto seleccionado", articulo)
+                    cantidad = validarNumero("Ingrese cantidad: ")
+                    boletaGenerada = Boleta(numBoleta, articulo, cantidad)
+                    print(boletaGenerada.mostrarBoleta())
+
+        if buscar == 2:
+            nombreBuscar = input("Ingrese nombre: ")
+            while type(nombreBuscar) != str:
+                nombreBuscar = input("Ingrese nombre: ")
+            for articulo in listaProductos:
+                if articulo.nombre == nombreBuscar:
+                    print("Producto seleccionado", articulo)
+                else:
+                    print("Ingrese nombre válido")
+                boletaGenerada = Boleta(numBoleta, articulo, cantidad)
+                print(boletaGenerada.mostrarBoleta())
 
     else:
         print("\nProceso finalizado....")
         break
+
 
