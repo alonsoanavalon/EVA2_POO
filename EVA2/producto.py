@@ -20,6 +20,8 @@ class Producto:
             self.precio = nuevoPrecio
             return "El precio ha sido actualizado con éxito"
         else:
+            error = print("El producto no ha podido ser actualizado")
+            return error
 
 
 
@@ -35,8 +37,6 @@ class Producto:
 
 
 productito = Producto(20, "Pan", 2000, 10)
-
-print(productito.mostrarProducto())
 
 productito.actualizarPrecio(0)
 

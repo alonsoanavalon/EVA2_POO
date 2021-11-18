@@ -1,5 +1,5 @@
-from EVA2_POO.EVA2.producto import Producto
-from EVA2_POO.EVA2.boleta import Boleta
+from EVA2.producto import Producto
+from EVA2.boleta import Boleta
 
 
 #Antes de agregarlo deberíamos hacer las comprobaciones correspondientes
