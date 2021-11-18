@@ -16,7 +16,7 @@ class Producto:
         return txt
 
     def actualizarPrecio (self, nuevoPrecio):
-        if int(self.precio) and int(nuevoPrecio) > 0:
+        if int(nuevoPrecio) and int(nuevoPrecio) > 0:
             self.precio = nuevoPrecio
             return print("El precio ha sido actualizado con éxito")
         else:
@@ -24,15 +24,22 @@ class Producto:
             return error
 
     def restarStock (self, cantidad):
-        if int(self.precio) and int(cantidad) > 0:
+        if int(cantidad) and int(cantidad) > 0:
             self.stock -= cantidad
             return "El stock ha sido actualizado con éxito"
         else:
             error = print("El producto no ha podido ser actualizado")
             return error
 
-
-
+    def validarStock(self, cantidad):
+        if int(cantidad) and int(cantidad) >= 1 and self.stock >= 1:
+            if self.stock > cantidad:
+                return True
+            elif self.stock < cantidad:
+                return self.stock
+        else:
+            error = print("No hay stock para {}".format(self.nombre))
+            return error
 
     def __str__(self):
         txt = """
@@ -47,7 +54,9 @@ class Producto:
 
 productito = Producto(20, "Pan", 2000, 10)
 
-productito.actualizarPrecio(0)
-productito.restarStock(2)
+productito.restarStock(5)
+
+print(productito.validarStock(4))
+
 
 print(productito.mostrarProducto())
