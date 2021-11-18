@@ -23,6 +23,15 @@ class Producto:
             error = print("El producto no ha podido ser actualizado")
             return error
 
+    def restarStock (self, cantidad):
+        if int(self.precio) and int(cantidad) > 0:
+            self.stock -= cantidad
+            return "El stock ha sido actualizado con éxito"
+        else:
+            error = print("El producto no ha podido ser actualizado")
+            return error
+
+
 
 
     def __str__(self):
@@ -39,5 +48,6 @@ class Producto:
 productito = Producto(20, "Pan", 2000, 10)
 
 productito.actualizarPrecio(0)
+productito.restarStock(2)
 
 print(productito.mostrarProducto())
