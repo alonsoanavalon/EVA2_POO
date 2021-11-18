@@ -29,6 +29,9 @@ listaProductos.append(desatornillador)
 diablo = Producto(10, "Diablo", 8000, 50)
 listaProductos.append(diablo)
 
+boletita2 = Boleta(1, pintura, 3)
+print(boletita2.mostrarBoleta())
+
 
 for producto in listaProductos:
     print(producto.mostrarProducto())
