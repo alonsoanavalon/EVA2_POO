@@ -15,6 +15,14 @@ class Producto:
 
         return txt
 
+    def actualizarPrecio (self, nuevoPrecio):
+        if int(self.precio) and int(nuevoPrecio) > 0:
+            self.precio = nuevoPrecio
+            return "El precio ha sido actualizado con éxito"
+        else:
+
+
+
     def __str__(self):
         txt = """
                 ID : {},
@@ -25,3 +33,11 @@ class Producto:
 
         return txt
 
+
+productito = Producto(20, "Pan", 2000, 10)
+
+print(productito.mostrarProducto())
+
+productito.actualizarPrecio(0)
+
+print(productito.mostrarProducto())

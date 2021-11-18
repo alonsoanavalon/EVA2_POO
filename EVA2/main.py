@@ -3,8 +3,6 @@ from EVA2.boleta import Boleta
 
 
 #Antes de agregarlo deberíamos hacer las comprobaciones correspondientes
-
-
 #boletita = Boleta(1, productito, 2, productito.precio)
 #print(boletita.mostrarBoleta())
 

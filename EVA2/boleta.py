@@ -17,4 +17,9 @@ class Boleta:
 
         return txt
 
+    def totalPagar(self):
+        total = int(self.cantidad) + int(self.precio)
+        return total
+
+
 
