@@ -56,7 +56,7 @@ productito = Producto(20, "Pan", 2000, 10)
 
 productito.restarStock(5)
 
-print(productito.validarStock(4))
+print(type(productito.validarStock(10)))
 
 
 print(productito.mostrarProducto())
