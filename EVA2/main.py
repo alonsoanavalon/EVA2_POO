@@ -82,8 +82,13 @@ while True:
     print("2. Actualizar precio producto")
     print("3. Generar boleta (venta)")
     print("4. Registro de boleta emitida")
-    print("5. Salir/Finalizar")
-    opcion = int(input("Ingrese una opción (1-4): "))
+    print("5. Mostrar listado de productos")
+    print("6. Salir/Finalizar")
+    opcion = validarNumero("Ingrese una opción (1-6): ")
+
+    while opcion < 1 or opcion > 6:
+        opcion = validarNumero("Ingrese una opción (1-6): ")
+
 
     if opcion==1:
         print("\nAgregando producto...")
@@ -92,7 +97,11 @@ while True:
         nombre = input("\nIngrese nombre del producto: ")
         nombre = nombre.lower()
         precio = int(input("Ingrese precio: "))
+        while precio < 1:
+            precio = int(input("Ingrese precio: "))
         stock = int(input("Ingrese stock: "))
+        while stock < 1:
+            stock = int(input("Ingrese stock: "))
         nuevoProducto = Producto(nuevoProductoId, nombre, precio, stock)
         print("\nNuevo producto agregado: ", nuevoProducto)
         listaProductos.append(nuevoProducto)
@@ -101,15 +110,19 @@ while True:
         print("\nActualizando precio...")
         print("1. Buscar por ID")
         print("2. Buscar por Nombre")
-        buscar = int(input("Ingrese opción (1-2): "))
+        buscar =  validarNumero("Ingrese opción (1-2): ")
+        while buscar > 2 or buscar < 1:
+            buscar = validarNumero("Ingrese opción (1-2): ")
 
         if buscar == 1:
             idBuscar = validarNumero("Ingrese ID:")
+            while idBuscar > len(listaProductos):
+                idBuscar = validarNumero("Ingrese un ID entre {} y {}:".format(1, len(listaProductos)))
             for articulo in listaProductos:
                 if articulo.id == idBuscar:
 
                     print("Precio a modificar: ", articulo)
-                    nuevoPrecio = int(input("Ingrese nuevo precio: "))
+                    nuevoPrecio = validarNumero("Ingrese nuevo precio: ")
                     articulo.actualizarPrecio(nuevoPrecio)
                     print("Precio modificado: ", articulo)
 
@@ -121,7 +134,7 @@ while True:
             for articulo in listaProductos:
                 if articulo.nombre == nombreBuscar:
                     print("Precio a modificar: ", articulo)
-                    nuevoPrecio = int(input("Ingrese nuevo precio: "))
+                    nuevoPrecio = validarNumero("Ingrese nuevo precio: ")
                     articulo.actualizarPrecio(nuevoPrecio)
                     print("Precio modificado: ", articulo)
 
@@ -130,7 +143,9 @@ while True:
         print("\nGenerando boleta N°{}".format(numBoleta))
         print("1. Seleccionar producto por ID")
         print("2. Seleccionar producto por Nombre")
-        buscar = int(input("Ingrese opción (1-2): "))
+        buscar = validarNumero("Ingrese opción (1-2): ")
+        while buscar > 2 or buscar < 1:
+            buscar = validarNumero("Ingrese opción (1-2): ")
 
 
 
@@ -143,6 +158,10 @@ while True:
             if buscar == 1:
                 productoEncontrado = False
                 idBuscar = validarNumero("Ingrese ID:")
+
+                while idBuscar > len(listaProductos) or idBuscar < 1:
+                    idBuscar = validarNumero("Ingrese ID válido entre {} y {}:".format(1, len(listaProductos)))
+
                 for articulo in listaProductos:
                     if articulo.id == idBuscar:
                         productoEncontrado = True
@@ -165,6 +184,12 @@ while True:
                                 "{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre,
                                                                                                       cantidadStock))
                             res = res.lower()
+                            while res != "si" or res != "no":
+                                res = input(
+                                    "{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(
+                                        articulo.nombre,
+                                        cantidadStock))
+                                res = res.lower()
                             if res == "si":
                                 articulo.restarStock(cantidadStock)
                                 boletaGenerada = Boleta(numBoleta, articulo, cantidadStock)
@@ -203,6 +228,12 @@ while True:
                                 "{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre,
                                                                                                       cantidadStock))
                             res = res.lower()
+                            while res != "si" or res != "no":
+                                res = input(
+                                    "{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(
+                                        articulo.nombre,
+                                        cantidadStock))
+                                res = res.lower()
                             if res == "si":
                                 articulo.restarStock(cantidadStock)
                                 boletaGenerada = Boleta(numBoleta, articulo, cantidadStock)
@@ -225,8 +256,16 @@ while True:
                 respuesta = False
 
     elif opcion == 4:
+        if len(listaBoleta) == 0:
+            print("No se han generado boletas")
+            continue
         idBuscar = validarNumero("Ingrese ID boleta:")
+        while idBuscar > len(listaBoleta) or idBuscar < 1:
+            idBuscar = validarNumero("Ingrese ID boleta entre {} y {}:".format(1, len(listaBoleta)))
         print(generarBoletaVenta(idBuscar))
+
+    elif opcion == 5:
+        mostrarProductos(listaProductos)
 
 
 
