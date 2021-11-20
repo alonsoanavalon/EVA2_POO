@@ -74,8 +74,9 @@ while True:
     print("\nMenú de Opciones")
     print("1. Agregar producto (nuevo)")
     print("2. Actualizar precio producto")
-    print("3. Generar boleta de venta")
-    print("4. Salir/Finalizar")
+    print("3. Generar boleta (venta)")
+    print("4. Registro de boleta emitida")
+    print("5. Salir/Finalizar")
     opcion = int(input("Ingrese una opción (1-4): "))
 
     if opcion==1:
@@ -160,7 +161,7 @@ while True:
                                 print(boletaGenerada.mostrarBoleta())
                             else:
                                 break
-                print(productoEncontrado, "FUERA DEL CICLO")
+
                 if productoEncontrado == False:
                     print("No se ha encontrado el producto con ID '{}'".format(idBuscar))
 
@@ -192,7 +193,6 @@ while True:
                             else:
                                 break
 
-                print(productoEncontrado, "FUERA DEL CICLO")
                 if productoEncontrado == False:
                     print("No se ha encontrado el producto  '{}'".format(nombreBuscar))
 
@@ -206,6 +206,10 @@ while True:
                 print(generarBoletaVenta(numBoleta))
                 numBoleta += 1
                 respuesta = False
+
+    elif opcion == 4:
+        idBuscar = validarNumero("Ingrese ID boleta:")
+        print(generarBoletaVenta(idBuscar))
 
 
 
