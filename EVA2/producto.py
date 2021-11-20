@@ -35,6 +35,8 @@ class Producto:
         if int(cantidad) and int(cantidad) >= 1 and self.stock >= 1:
             if self.stock > cantidad:
                 return True
+            elif self.stock == cantidad:
+                return self.stock
             elif self.stock < cantidad:
                 return self.stock
         else:

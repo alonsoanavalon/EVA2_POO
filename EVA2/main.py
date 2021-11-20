@@ -23,6 +23,22 @@ def mostrarProductos(listaProductos):
     for producto in listaProductos:
         print(producto.mostrarProducto())
 
+
+def generarBoletaVenta(numBoleta):
+    txt = "\nBoleta N°{}\n".format(numBoleta)
+    txt += "Detalle de compra:\n"
+    total = 0
+    contadorProducto = 1
+    for boleta in listaBoleta:
+        if boleta.numero == numBoleta:
+            txt += "{}. ".format(contadorProducto)
+            txt += boleta.mostrarDetalle()
+            total += boleta.devolverSubtotal()
+            contadorProducto += 1
+
+    txt += "El total de la compra es = ${}".format(total)
+    return txt
+
 listaProductos = []
 
 martillo = Producto(1, "martillo", 3000, 50)
@@ -47,12 +63,14 @@ diablo = Producto(10, "diablo", 8000, 50)
 listaProductos.append(diablo)
 
 listaBoleta = []
-numBoleta = len(listaBoleta)
+numBoleta = 1
+productoEncontrado = False
 
 mostrarProductos(listaProductos)
 
 
 while True:
+    productoEncontrado = False
     print("\nMenú de Opciones")
     print("1. Agregar producto (nuevo)")
     print("2. Actualizar precio producto")
@@ -101,60 +119,95 @@ while True:
 
     elif opcion==3:
 
-        print("\nGenerando boleta...")
+        print("\nGenerando boleta N°{}".format(numBoleta))
         print("1. Seleccionar producto por ID")
         print("2. Seleccionar producto por Nombre")
         buscar = int(input("Ingrese opción (1-2): "))
-        numBoleta = len(listaBoleta) + 1
-        #while true
+
+
+
         mostrarProductos(listaProductos)
 
-        if buscar == 1:
-            idBuscar = validarNumero("Ingrese ID:")
-            for articulo in listaProductos:
-                if articulo.id == idBuscar:
-                    print("Producto seleccionado", articulo)
-                    cantidad = validarNumero("Ingrese cantidad: ")
-                    cantidadStock = articulo.validarStock(cantidad)
-                    if cantidadStock == True:
-                        articulo.restarStock(cantidad)
-                        boletaGenerada = Boleta(numBoleta, articulo, cantidad)
-                        listaBoleta.append(boletaGenerada)
-                        print(boletaGenerada.mostrarBoleta())
-                    elif type(cantidadStock) == int:
-                        res = input("{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre, cantidadStock))
-                        res = res.lower()
-                        if res == "si":
-                            articulo.restarStock(cantidadStock)
-                            boletaGenerada = Boleta(numBoleta, articulo, cantidadStock)
-                            listaBoleta.append(boletaGenerada)
-                            print(boletaGenerada.mostrarBoleta())
-                        else:
-                            break
+        # while true
 
-        if buscar == 2:
-            nombreBuscar = input("Ingrese nombre: ")
-            nombreBuscar = nombreBuscar.lower()
-            for articulo in listaProductos:
-                if articulo.nombre == nombreBuscar:
-                    print("Producto seleccionado", articulo)
-                    cantidad = validarNumero("Ingrese cantidad: ")
-                    cantidadStock = articulo.validarStock(cantidad)
-                    if cantidadStock == True:
-                        articulo.restarStock(cantidad)
-                        boletaGenerada = Boleta(numBoleta, articulo, cantidad)
-                        listaBoleta.append(boletaGenerada)
-                        print(boletaGenerada.mostrarBoleta())
-                    elif type(cantidadStock) == int:
-                        res = input("{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre, cantidadStock))
-                        res = res.lower()
-                        if res == "si":
-                            articulo.restarStock(cantidadStock)
-                            boletaGenerada = Boleta(numBoleta, articulo, cantidadStock)
+        respuesta = True
+
+        while respuesta == True:
+
+            if buscar == 1:
+                productoEncontrado = False
+                idBuscar = validarNumero("Ingrese ID:")
+                for articulo in listaProductos:
+                    if articulo.id == idBuscar:
+                        productoEncontrado = True
+                        print("Producto seleccionado", articulo)
+                        cantidad = validarNumero("Ingrese cantidad: ")
+                        cantidadStock = articulo.validarStock(cantidad)
+                        if cantidadStock == True or cantidadStock == cantidad:
+                            articulo.restarStock(cantidad)
+                            boletaGenerada = Boleta(numBoleta, articulo, cantidad)
                             listaBoleta.append(boletaGenerada)
                             print(boletaGenerada.mostrarBoleta())
-                        else:
-                            break
+                        elif cantidadStock < cantidad:
+                            res = input(
+                                "{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre,
+                                                                                                      cantidadStock))
+                            res = res.lower()
+                            if res == "si":
+                                articulo.restarStock(cantidadStock)
+                                boletaGenerada = Boleta(numBoleta, articulo, cantidadStock)
+                                listaBoleta.append(boletaGenerada)
+                                print(boletaGenerada.mostrarBoleta())
+                            else:
+                                break
+                print(productoEncontrado, "FUERA DEL CICLO")
+                if productoEncontrado == False:
+                    print("No se ha encontrado el producto con ID '{}'".format(idBuscar))
+
+            if buscar == 2:
+                productoEncontrado = False
+                nombreBuscar = input("Ingrese nombre: ")
+                nombreBuscar = nombreBuscar.lower()
+                for articulo in listaProductos:
+                    if articulo.nombre == nombreBuscar:
+                        productoEncontrado = True
+                        print("Producto seleccionado", articulo)
+                        cantidad = validarNumero("Ingrese cantidad: ")
+                        cantidadStock = articulo.validarStock(cantidad)
+                        if cantidadStock == True:
+                            articulo.restarStock(cantidad)
+                            boletaGenerada = Boleta(numBoleta, articulo, cantidad)
+                            listaBoleta.append(boletaGenerada)
+                            print(boletaGenerada.mostrarBoleta())
+                        elif type(cantidadStock) == int:
+                            res = input(
+                                "{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre,
+                                                                                                      cantidadStock))
+                            res = res.lower()
+                            if res == "si":
+                                articulo.restarStock(cantidadStock)
+                                boletaGenerada = Boleta(numBoleta, articulo, cantidadStock)
+                                listaBoleta.append(boletaGenerada)
+                                print(boletaGenerada.mostrarBoleta())
+                            else:
+                                break
+
+                print(productoEncontrado, "FUERA DEL CICLO")
+                if productoEncontrado == False:
+                    print("No se ha encontrado el producto  '{}'".format(nombreBuscar))
+
+
+            respuesta = input("¿Desea comprar un nuevo producto? SI/NO")
+            respuesta.lower()
+            if respuesta == "si":
+                respuesta = True
+            elif respuesta == "no":
+                print("Esto debiese ejecutarse antes de la boleta")
+                print(generarBoletaVenta(numBoleta))
+                numBoleta += 1
+                respuesta = False
+
+
 
 
 # FALTA: -PREGUNTAR AL USUARIO POR CIERRE DE LA VENTA (AGREGAR + PRODUCTOS O FINALIZAR)
