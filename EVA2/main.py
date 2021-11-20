@@ -12,9 +12,15 @@ def validarNumero(pregunta):
             print("Debes escribir un número.")
             continue
 
+        if type(numero) == float:
+            print("Debes escribir un numero entero")
+            continue
+
         if numero < 0:
             print("Debes escribir un número positivo.")
             continue
+
+
         else:
             break
     return numero
@@ -101,6 +107,7 @@ while True:
             idBuscar = validarNumero("Ingrese ID:")
             for articulo in listaProductos:
                 if articulo.id == idBuscar:
+
                     print("Precio a modificar: ", articulo)
                     nuevoPrecio = int(input("Ingrese nuevo precio: "))
                     articulo.actualizarPrecio(nuevoPrecio)
@@ -129,8 +136,6 @@ while True:
 
         mostrarProductos(listaProductos)
 
-        # while true
-
         respuesta = True
 
         while respuesta == True:
@@ -141,8 +146,14 @@ while True:
                 for articulo in listaProductos:
                     if articulo.id == idBuscar:
                         productoEncontrado = True
+                        if articulo.stock < 1 or articulo.stock == 0:
+                            print("No hay stock de {}".format(articulo.nombre))
+                            continue
+
                         print("Producto seleccionado", articulo)
                         cantidad = validarNumero("Ingrese cantidad: ")
+                        while cantidad < 1:
+                            cantidad = validarNumero("Ingrese cantidad mayor a 0: ")
                         cantidadStock = articulo.validarStock(cantidad)
                         if cantidadStock == True or cantidadStock == cantidad:
                             articulo.restarStock(cantidad)
@@ -172,8 +183,15 @@ while True:
                 for articulo in listaProductos:
                     if articulo.nombre == nombreBuscar:
                         productoEncontrado = True
+                        if articulo.stock < 1 or articulo.stock == 0:
+                            print("No hay stock de {}".format(articulo.nombre))
+                            continue
+
                         print("Producto seleccionado", articulo)
                         cantidad = validarNumero("Ingrese cantidad: ")
+
+                        while cantidad < 1:
+                            cantidad = validarNumero("Ingrese cantidad mayor a 0: ")
                         cantidadStock = articulo.validarStock(cantidad)
                         if cantidadStock == True:
                             articulo.restarStock(cantidad)
@@ -202,7 +220,6 @@ while True:
             if respuesta == "si":
                 respuesta = True
             elif respuesta == "no":
-                print("Esto debiese ejecutarse antes de la boleta")
                 print(generarBoletaVenta(numBoleta))
                 numBoleta += 1
                 respuesta = False
