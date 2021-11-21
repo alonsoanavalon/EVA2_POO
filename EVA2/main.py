@@ -107,6 +107,7 @@ while True:
         listaProductos.append(nuevoProducto)
 
     elif opcion==2:
+        mostrarProductos(listaProductos)
         print("\nActualizando precio...")
         print("1. Buscar por ID")
         print("2. Buscar por Nombre")
@@ -157,6 +158,7 @@ while True:
 
             if buscar == 1:
                 productoEncontrado = False
+                mostrarProductos(listaProductos)
                 idBuscar = validarNumero("Ingrese ID:")
 
                 while idBuscar > len(listaProductos) or idBuscar < 1:
@@ -203,6 +205,7 @@ while True:
 
             if buscar == 2:
                 productoEncontrado = False
+                mostrarProductos(listaProductos)
                 nombreBuscar = input("Ingrese nombre: ")
                 nombreBuscar = nombreBuscar.lower()
                 for articulo in listaProductos:
