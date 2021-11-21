@@ -186,7 +186,10 @@ while True:
                                 "{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre,
                                                                                                       cantidadStock))
                             res = res.lower()
-                            while res != "si" or res != "no":
+                            print(res, "respuesta")
+                            print(res != "si")
+                            print(res != "no")
+                            while res != "si" and res != "no":
                                 res = input(
                                     "{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(
                                         articulo.nombre,
