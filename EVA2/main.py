@@ -186,9 +186,6 @@ while True:
                                 "{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(articulo.nombre,
                                                                                                       cantidadStock))
                             res = res.lower()
-                            print(res, "respuesta")
-                            print(res != "si")
-                            print(res != "no")
                             while res != "si" and res != "no":
                                 res = input(
                                     "{} tiene un stock de {}, ¿Desea comprar dicho stock? SI/NO: ".format(
@@ -272,13 +269,6 @@ while True:
 
     elif opcion == 5:
         mostrarProductos(listaProductos)
-
-
-
-
-# FALTA: -PREGUNTAR AL USUARIO POR CIERRE DE LA VENTA (AGREGAR + PRODUCTOS O FINALIZAR)
-    #    -GENERAR BOLETA DE VENTA (TRAER DATOS DE ESTA)
-    #    -3.C. - 4.B. - 4.C.
 
     else:
         print("\nProceso finalizado....")

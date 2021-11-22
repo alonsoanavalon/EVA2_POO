@@ -7,7 +7,7 @@ class Boleta:
         self.precio = producto.precio
         self.subtotal = self.cantidad * self.precio
 
-    def mostrarBoleta(self):
+    def mostrarBoleta (self):
         txt = """
         Boleta Número {},
         Producto asociado: {}
@@ -18,14 +18,14 @@ class Boleta:
 
         return txt
 
-    def mostrarDetalle(self):
+    def mostrarDetalle (self):
         txt ="{} = {} * {} = {}\n".format(self.producto.nombre, self.cantidad, self.precio, self.subtotal)
         return txt
 
-    def devolverSubtotal(self):
+    def devolverSubtotal (self):
         return self.subtotal
 
-    def totalPagar(self):
+    def totalPagar (self):
         total = int(self.cantidad) + int(self.precio)
         return total
 

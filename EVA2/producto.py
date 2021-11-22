@@ -31,7 +31,7 @@ class Producto:
             error = print("El producto no ha podido ser actualizado")
             return error
 
-    def validarStock(self, cantidad):
+    def validarStock (self, cantidad):
         if int(cantidad) and int(cantidad) >= 1 and self.stock >= 1:
             if self.stock > cantidad:
                 return True
