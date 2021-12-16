@@ -1,23 +1,29 @@
-class Producto:
-    def __init__(self, id, nombre, precio, stock):
-        self.id = id
+from EVA2.precio import Precio
+
+class Producto(Precio):
+    def __init__(self, idproducto, nombre, stock, idprecio, preciolista, ganancia):
+        super().__init__(idprecio, preciolista, ganancia)
+        self.idproducto = idproducto
         self.nombre = nombre
-        self.precio = precio
         self.stock = stock
+        self.ganancia = (ganancia / 100) + 1
+        self.precio = self.ganancia * self.preciolista
+
 
     def mostrarProducto (self):
         txt = """
                 ID : {},
                 Nombre: {},
-                Precio: {},
+                Precio: {:.0f},
                 Stock: {}
-        """.format(self.id, self.nombre, self.precio, self.stock)
+        """.format(self.idproducto, self.nombre, self.precio, self.stock)
 
         return txt
 
-    def actualizarPrecio (self, nuevoPrecio):
+    def actualizarPrecio (self, nuevoPrecio, nuevaGanancia):
         if int(nuevoPrecio) and int(nuevoPrecio) > 0:
-            self.precio = nuevoPrecio
+            ganancia = (nuevaGanancia/100) + 1
+            self.precio = ganancia * nuevoPrecio
             return print("El precio ha sido actualizado con éxito")
         else:
             error = print("El producto no ha podido ser actualizado")
@@ -49,7 +55,7 @@ class Producto:
                 Nombre: {},
                 Precio: {},
                 Stock: {}
-        """.format(self.id, self.nombre, self.precio, self.stock)
+        """.format(self.idproducto, self.nombre, self.precio, self.stock)
 
         return txt
 
