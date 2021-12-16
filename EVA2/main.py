@@ -1,9 +1,6 @@
 from EVA2.producto import Producto
 from EVA2.boleta import Boleta
 
-
-#Antes de agregarlo deberíamos hacer las comprobaciones correspondientes
-
 def validarNumero(pregunta):
     while True:
         try:
@@ -20,7 +17,6 @@ def validarNumero(pregunta):
             print("Debes escribir un número positivo.")
             continue
 
-
         else:
             break
     return numero
@@ -28,7 +24,6 @@ def validarNumero(pregunta):
 def mostrarProductos(listaProductos):
     for producto in listaProductos:
         print(producto.mostrarProducto())
-
 
 def generarBoletaVenta(numBoleta):
     txt = "\nBoleta N°{}\n".format(numBoleta)
