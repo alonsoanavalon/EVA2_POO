@@ -1,13 +1,10 @@
 from EVA2.producto import Producto
 from EVA2.boleta import Boleta
 
-<<<<<<< HEAD
-=======
 
 
 #Antes de agregarlo deberíamos hacer las comprobaciones correspondientes
 
->>>>>>> 87a049e8e409760b0cc5be0297e191ede9b84f09
 def validarNumero(pregunta):
     while True:
         try:
@@ -44,14 +41,14 @@ def generarBoletaVenta(numBoleta):
             total += boleta.devolverSubtotal()
             contadorProducto += 1
 
-    txt += "El total de la compra es = ${}".format(total)
+    txt += "El total de la compra es = ${:.0f}".format(total)
     return txt
 
 # CRUD PRODUCTOS
 # Create
 
-def crearProducto(idproducto, nombre, stock, idprecio, preciolista, ganancia):
-    producto = Producto(idproducto,nombre,stock,idprecio,preciolista, ganancia)
+def crearProducto(idproducto, nombre, stock, idprecio, preciolista, ganancia, proveedor, categoria):
+    producto = Producto(idproducto,nombre,stock,idprecio,preciolista, ganancia, proveedor, categoria)
     listaProductos.append(producto)
     return producto
 
@@ -61,7 +58,7 @@ def traerProducto(idproducto, listaProductos):
         if producto.idproducto == idBuscar:
             return producto.mostrarProducto()
 
-def actualizarProducto(idproducto, nombre, stock, idprecio, preciolista, ganancia, listaProductos):
+def actualizarProducto(idproducto, nombre, stock, idprecio, preciolista, ganancia, listaProductos, proveedor, categoria):
     idBuscar = idproducto
     for producto in listaProductos:
         if producto.idproducto == idBuscar:
@@ -71,6 +68,8 @@ def actualizarProducto(idproducto, nombre, stock, idprecio, preciolista, gananci
             producto.preciolista = preciolista
             producto.ganancia = (ganancia / 100) + 1
             producto.precio = producto.ganancia * producto.preciolista
+            producto.proveedor = proveedor
+            producto.categoria = categoria
             return producto.mostrarProducto()
 
 def eliminarProducto(idproducto, listaProductos):
@@ -92,17 +91,17 @@ def eliminarProducto(idproducto, listaProductos):
 
 listaProductos = []
 
-martillo = crearProducto(1, "martillo", 50, 2, 8000, 20)
-taladro = crearProducto(2, "taladro", 50, 3, 30000, 15)
-cemento = crearProducto(3, "cemento", 40, 4, 40000, 15)
-clavos = crearProducto(4, "clavos", 50, 5, 3000, 30)
-tornillos = crearProducto(5, "tornillos", 100, 6, 2500, 50)
-tuboPvc = crearProducto(6, "tubo pvc", 60, 7, 4000, 40)
-pintura = crearProducto(7, "pintura", 50, 8, 6000, 30)
-pastaMuro = crearProducto(8, "pasta muro", 60, 9, 10000, 35)
-desatornillador = crearProducto(9, "desatornillador", 30, 10, 4000, 35)
-diablo = crearProducto(10, "diablo", 20, 11, 8000, 20)
-espatula = crearProducto(11, "espatula", 10, 1, 1000, 10)
+martillo = crearProducto(1, "martillo", 50, 2, 8000, 20, "makita", "herramientas")
+taladro = crearProducto(2, "taladro", 50, 3, 30000, 15, "B&D", "herramientas")
+cemento = crearProducto(3, "cemento", 40, 4, 40000, 15, "polpaico", "herramientas")
+clavos = crearProducto(4, "clavos", 50, 5, 3000, 30, "genericos", "insumos")
+tornillos = crearProducto(5, "tornillos", 100, 6, 2500, 50, "genericos", "insumos")
+tuboPvc = crearProducto(6, "tubo pvc", 60, 7, 4000, 40, "makita", "herramientas")
+pintura = crearProducto(7, "pintura", 50, 8, 6000, 30, "ceresita", "pinturas")
+pastaMuro = crearProducto(8, "pasta muro", 60, 9, 10000, 35, "tajamar", "materiales")
+desatornillador = crearProducto(9, "desatornillador", 30, 10, 4000, 35, "stanley", "herramientas")
+diablo = crearProducto(10, "diablo", 20, 11, 8000, 20, "makita", "herramientas")
+espatula = crearProducto(11, "espatula", 10, 1, 1000, 10, "makita", "herramientas")
 
 #Prueba eliminando producto OK, Prueba traerProducto OK, actualizarProducto OK
 #eliminarProducto(10, listaProductos)
@@ -131,6 +130,17 @@ while True:
     while opcion < 1 or opcion > 6:
         opcion = validarNumero("Ingrese una opción (1-6): ")
 
+# 1. Mantenedor de productos
+    # 1.1 Agregar producto (nuevo)
+    # 1.2 Mostrar producto por ID
+    # 1.3 Mostrar listado completo de productos
+    # 1.4 Actualizar un producto (Nombre - Stock - Proveedor - Categoria)
+    # 1.5 Eliminar un producto
+# 2. Mantenedor de precios
+    # 2.1 Mostrar precio por ID de producto
+    # 2.2 Actualizar precio por ID de producto (Precio - Precio ganancia)
+# 3. Generar boleta (venta)
+# 4. Registro de boletas emitidas
 
     if opcion==1:
         print("\nAgregando producto...")
@@ -141,16 +151,17 @@ while True:
         preciolista = int(input("Ingrese precio: "))
         while preciolista < 1:
             preciolista = int(input("Ingrese precio: "))
-        ganancia = int(input("Ingrese ganancia: "))
+        ganancia = int(input("Ingrese porcentaje de ganancia %: "))
         while ganancia < 1:
-            ganancia = int(input("Ingrese ganancia: "))
+            ganancia = int(input("Ingrese porcentaje de ganancia %: "))
         stock = int(input("Ingrese stock: "))
         while stock < 1:
             stock = int(input("Ingrese stock: "))
+        proveedor = input("Ingrese proveedor: ")
+        categoria = input("Ingrese categoría: ")
 
-        nuevoProducto = crearProducto(nuevoProductoId, nombre, stock, nuevoProductoId, preciolista, ganancia)
+        nuevoProducto = crearProducto(nuevoProductoId, nombre, stock, nuevoProductoId, preciolista, ganancia, proveedor, categoria)
         print("\nNuevo producto agregado: ", nuevoProducto)
-        listaProductos.append(nuevoProducto)
 
     elif opcion==2:
         mostrarProductos(listaProductos)

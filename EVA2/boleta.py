@@ -12,14 +12,14 @@ class Boleta:
         Boleta Número {},
         Producto asociado: {}
         Cantidad: {}
-        Precio : {}
+        Precio : {:.0f}
         Subtotal: {}
         """.format(self.numero, self.producto, self.cantidad, self.precio, self.subtotal)
 
         return txt
 
     def mostrarDetalle (self):
-        txt ="{} = {} * {} = {}\n".format(self.producto.nombre, self.cantidad, self.precio, self.subtotal)
+        txt ="{} = {} * {:.0f} = {:.0f}\n".format(self.producto.nombre, self.cantidad, self.precio, self.subtotal)
         return txt
 
     def devolverSubtotal (self):

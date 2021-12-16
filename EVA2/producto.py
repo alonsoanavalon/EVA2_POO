@@ -1,13 +1,16 @@
 from EVA2.precio import Precio
 
 class Producto(Precio):
-    def __init__(self, idproducto, nombre, stock, idprecio, preciolista, ganancia):
+    def __init__(self, idproducto, nombre, stock, idprecio, preciolista, ganancia, proveedor, categoria):
         super().__init__(idprecio, preciolista, ganancia)
         self.idproducto = idproducto
         self.nombre = nombre
         self.stock = stock
+        self.proveedor = proveedor
+        self.categoria = categoria
         self.ganancia = (ganancia / 100) + 1
         self.precio = self.ganancia * self.preciolista
+
 
 
     def mostrarProducto (self):
@@ -15,8 +18,10 @@ class Producto(Precio):
                 ID : {},
                 Nombre: {},
                 Precio: {:.0f},
-                Stock: {}
-        """.format(self.idproducto, self.nombre, self.precio, self.stock)
+                Stock: {},
+                Proveedor: {},
+                Categoría: {}
+        """.format(self.idproducto, self.nombre, self.precio, self.stock, self.proveedor, self.categoria)
 
         return txt
 
@@ -53,9 +58,11 @@ class Producto(Precio):
         txt = """
                 ID : {},
                 Nombre: {},
-                Precio: {},
-                Stock: {}
-        """.format(self.idproducto, self.nombre, self.precio, self.stock)
+                Precio: {:.0f},
+                Stock: {},
+                Proveedor: {},
+                Categoría: {}
+        """.format(self.idproducto, self.nombre, self.precio, self.stock, self.proveedor, self.categoria)
 
         return txt
 
