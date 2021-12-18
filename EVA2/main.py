@@ -47,7 +47,7 @@ def generarBoletaVenta(numBoleta):
 
 
 listaProductos = []
-numeroBoleta = 1
+
 
 martillo = Producto.crearProducto(1, "martillo", 50, 2, 8000, 20, "makita", "herramientas", listaProductos)
 taladro = Producto.crearProducto(2, "taladro", 50, 3, 30000, 15, "B&D", "herramientas", listaProductos)
@@ -60,11 +60,6 @@ pastaMuro = Producto.crearProducto(8, "pasta muro", 60, 9, 10000, 35, "tajamar",
 desatornillador = Producto.crearProducto(9, "desatornillador", 30, 10, 4000, 35, "stanley", "herramientas", listaProductos)
 diablo = Producto.crearProducto(10, "diablo", 20, 11, 8000, 20, "makita", "herramientas", listaProductos)
 espatula = Producto.crearProducto(11, "espatula", 10, 1, 1000, 10, "makita", "herramientas", listaProductos)
-
-#Prueba eliminando producto OK, Prueba traerProducto OK, actualizarProducto OK
-#eliminarProducto(10, listaProductos)
-#print(traerProducto(10, listaProductos))
-#actualizarProducto(10,"test", 100, 11, 1000, 20, listaProductos)
 
 
 listaBoleta = []
@@ -223,7 +218,7 @@ while True:
                     print("Precio modificado: ", articulo)
 
     elif opcion==3:
-
+        numeroBoleta = 1
         carritoCompra = []
 
         print("\nGenerando boleta N°{}".format(numeroBoleta))
@@ -348,8 +343,8 @@ while True:
                 respuesta = True
             elif respuesta == "no":
                 for producto in carritoCompra:
-                    print(producto)
-                    print("\n")
+                    print(producto.mostrarCarrito())
+
 
                 respuestaCarrito = input("¿Desea eliminar algun producto del carrito? SI/NO")
                 respuestaCarrito.lower()
@@ -363,13 +358,13 @@ while True:
                     carritoCompra.pop(idEliminar - 1)
 
                     if len(carritoCompra) >= 1:
-                        for carrito in carritoCompra:
-                            print(carrito)
-                            print("\n")
-                        respuestaCarrito = input("¿Desea eliminar algun producto del carrito? SI/NO")
+                        for producto in carritoCompra:
+                            print(producto.mostrarCarrito())
+
+                        respuestaCarrito = input("¿Desea eliminar otro producto del carrito? SI/NO")
                         respuestaCarrito.lower()
                         while respuestaCarrito != "si" and respuestaCarrito != "no":
-                            respuesta = input("¿Desea eliminar otro producto del carrito? SI/NO")
+                            respuestaCarrito = input("¿Desea eliminar otro producto del carrito? SI/NO")
                             respuesta.lower()
                     else:
                         print("El carrito esta vacío, será devuelto al menu...")
@@ -378,21 +373,24 @@ while True:
                 if respuestaCarrito == "no":
                     listaBoleta.append(carritoCompra)
                     for boleta in listaBoleta:
-                        print(boleta)
+                        if boleta[0].idboleta == idBoleta:
+                            for producto in boleta:
+                                print(producto.mostrarCarrito())
                     idBoleta += 1
                     respuesta = False
 
     elif opcion == 4:
+        if len(listaBoleta) < 1:
+            print("No existen boletas emitidas...")
         for boleta in listaBoleta:
-            print(boleta)
+            print("Boleta N°{}".format(boleta[0].idboleta))
+            for producto in boleta:
+                print(producto.mostrarCarrito())
+            print("\n")
 
     elif opcion == 5:
         print("Cerrando Programa...")
         break
-
-
-
-
 
     else:
         print("\nProceso finalizado....")

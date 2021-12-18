@@ -31,6 +31,9 @@ class Boleta:
         total = int(self.cantidad) + int(self.precio)
         return total
 
+    def mostrarCarrito(self):
+        txt = "ID: {}, Producto: {} * {} = {}".format(self.numero, self.producto.nombre, self.cantidad, self.subtotal)
+        return txt
     def __str__(self):
         txt = """
         Boleta Número {},
