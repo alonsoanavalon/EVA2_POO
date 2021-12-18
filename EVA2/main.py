@@ -84,26 +84,27 @@ while True:
         opcion = validarNumero("Ingrese una opción (1-5): ")
 
 # 1. Mantenedor de productos
-    # 1.1 Agregar producto (nuevo)
-    # 1.2 Mostrar producto por ID
-    # 1.3 Mostrar listado completo de productos
-    # 1.4 Actualizar un producto (Nombre - Stock - Proveedor - Categoria)
-    # 1.5 Eliminar un producto
-# 2. Mantenedor de precios --- LISTO...?
+    # 1.1 Agregar producto (nuevo) - LISTO
+    # 1.2 Mostrar producto por ID - LISTO
+    # 1.3 Mostrar listado completo de productos - LISTO
+    # 1.4 Actualizar un producto (Nombre - Stock - Proveedor - Categoria) - FALTA
+    # 1.5 Eliminar un producto - FALTA
+# 2. Mantenedor de precios --- LISTO
     # 2.1 Mostrar precio por ID de producto --- LISTO...?
     # 2.2 Actualizar precio por ID de producto (Precio - Precio ganancia) --- LISTO...?
-# 3. Generar boleta (venta)
-# 4. Registro de boletas emitidas
+# 3. Generar boleta (venta) - FALTA FORMATO TABLA, FORMATO MILLARES LISTO
+# 4. Registro de boletas emitidas - LISTO
 
     if opcion==1:
+        print("\nMantenedor de productos")
         print("1. Agregar producto")
         print("2. Mostrar producto por ID")
         print("3. Mostrar listado completo de productos")
         print("4. Actualizar un producto")
         print("5. Eliminar un producto")
-        opcionProducto = validarNumero("Ingrese una opción 1-5")
+        opcionProducto = validarNumero("Ingrese una opción (1-5): ")
         while opcionProducto > 5 or opcionProducto < 1:
-            opcionProducto = validarNumero("Ingrese una opción 1-5")
+            opcionProducto = validarNumero("Ingrese una opción (1-5): ")
 
         if opcionProducto == 1:
             print("\nAgregando producto...")
@@ -170,7 +171,7 @@ while True:
                         articulo.actualizarPrecio(nuevoPrecio)
                         print("Precio modificado: ", articulo)
 
-# MODIFICAR/REEMPLAZAR MENU 2  "ACTUALIZANDO PRECIO" POR EL MENU 7 "MANTENEDOR DE PRECIOS" (ESTÁ MAS ABAJO)
+        #elif opcionProducto == 5:
 
     elif opcion == 2:
 
@@ -178,7 +179,7 @@ while True:
 
         print("1. Consultar precio de producto por ID")
 
-        print("2. Actualizar precio de producto por ID (Precio - Precio ganancia")
+        print("2. Actualizar precio de producto por ID (Precio - Precio ganancia)")
 
         seleccionPrecio = validarNumero("Ingrese opción (1-2): ")
 
@@ -195,7 +196,7 @@ while True:
             for articulo in listaProductos:
 
                 if articulo.idproducto == idBuscar:
-                    print("Artículo consultado: ", articulo, "\nPrecio consultado: {:.0f} ".format(articulo.precio))
+                    print("Artículo consultado: ", articulo, "\nPrecio consultado: {:,.0f} ".format(articulo.precio).replace(',','.'))
 
         if seleccionPrecio == 2:
 

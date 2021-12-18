@@ -19,11 +19,11 @@ class Producto(Precio):
         txt = """
                 ID : {},
                 Nombre: {},
-                Precio: {:.0f},
+                Precio: {:,.0f},
                 Stock: {},
                 Proveedor: {},
                 Categoría: {}
-        """.format(self.idproducto, self.nombre, self.precio, self.stock, self.proveedor, self.categoria)
+        """.format(self.idproducto, self.nombre, self.precio, self.stock, self.proveedor, self.categoria).replace(',','.')
 
         return txt
 
@@ -64,7 +64,7 @@ class Producto(Precio):
                 Stock: {},
                 Proveedor: {},
                 Categoría: {}
-        """.format(self.idproducto, self.nombre, self.precio, self.stock, self.proveedor, self.categoria)
+        """.format(self.idproducto, self.nombre, self.precio, self.stock, self.proveedor, self.categoria).replace(',','.')
 
         return txt
 

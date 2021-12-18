@@ -14,14 +14,14 @@ class Boleta:
         Producto Número {},
         Producto asociado: {}
         Cantidad: {}
-        Precio : {:.0f}
-        Subtotal: {}
-        """.format(self.idboleta, self.numero,  self.producto, self.cantidad, self.precio, self.subtotal)
+        Precio : {:,.0f}
+        Subtotal: {:,.0f}
+        """.format(self.idboleta, self.numero,  self.producto, self.cantidad, self.precio, self.subtotal).replace(',','.')
 
         return txt
 
     def mostrarDetalle (self):
-        txt ="{} = {} * {:.0f} = {:.0f}\n".format(self.producto.nombre, self.cantidad, self.precio, self.subtotal)
+        txt ="{} = {} * {:.0f} = {:,.0f}\n".format(self.producto.nombre, self.cantidad, self.precio, self.subtotal).replace(',','.')
         return txt
 
     def devolverSubtotal (self):
@@ -32,7 +32,7 @@ class Boleta:
         return total
 
     def mostrarCarrito(self):
-        txt = "ID: {}, Producto: {} * {} = {}".format(self.numero, self.producto.nombre, self.cantidad, self.subtotal)
+        txt = "ID: {}, Producto: {} * {} = {:,.0f}".format(self.numero, self.producto.nombre, self.cantidad, self.subtotal).replace(',','.')
         return txt
     def __str__(self):
         txt = """
@@ -40,9 +40,9 @@ class Boleta:
         Producto Numero {},
         Producto asociado: {}
         Cantidad: {}
-        Precio : {:.0f}
-        Subtotal: {}
-        """.format(self.idboleta,self.numero,  self.producto, self.cantidad, self.precio, self.subtotal)
+        Precio : {:,.0f}
+        Subtotal: {:,.0f}
+        """.format(self.idboleta,self.numero,  self.producto, self.cantidad, self.precio, self.subtotal).replace(',','.')
 
         return txt
 
