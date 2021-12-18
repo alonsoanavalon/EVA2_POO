@@ -1,6 +1,8 @@
 from EVA2.precio import Precio
 
 class Producto(Precio):
+
+
     def __init__(self, idproducto, nombre, stock, idprecio, preciolista, ganancia, proveedor, categoria):
         super().__init__(idprecio, preciolista, ganancia)
         self.idproducto = idproducto
@@ -66,4 +68,50 @@ class Producto(Precio):
 
         return txt
 
+    # CRUD PRODUCTOS
+    # Create
+
+    def crearProducto(idproducto, nombre, stock, idprecio, preciolista, ganancia, proveedor, categoria, listaProductos):
+        producto = Producto(idproducto, nombre, stock, idprecio, preciolista, ganancia, proveedor, categoria)
+        listaProductos.append(producto)
+        return producto
+
+    def traerProducto(idproducto, listaProductos):
+        idBuscar = idproducto
+        for producto in listaProductos:
+            if producto.idproducto == idBuscar:
+                return print(producto)
+
+    def traerProductos(listaProductos):
+        for producto in listaProductos:
+            print(producto.mostrarProducto())
+
+    def actualizarProducto(idproducto, nombre, stock, idprecio, preciolista, ganancia, listaProductos, proveedor,
+                           categoria):
+        idBuscar = idproducto
+        for producto in listaProductos:
+            if producto.idproducto == idBuscar:
+                producto.nombre = nombre
+                producto.stock = stock
+                producto.idprecio = idprecio
+                producto.preciolista = preciolista
+                producto.ganancia = (ganancia / 100) + 1
+                producto.precio = producto.ganancia * producto.preciolista
+                producto.proveedor = proveedor
+                producto.categoria = categoria
+                return producto.mostrarProducto()
+
+    def eliminarProducto(idproducto, listaProductos):
+        idBuscar = idproducto
+        contador = 0
+        for producto in listaProductos:
+            print("Vuelta n°{}".format(contador))
+            if producto.idproducto == idBuscar:
+                listaProductos.pop(contador)
+                print("Se ha eliminado el producto con id {}, contador {}, nombre {}".format(producto.idproducto,
+                                                                                             contador, producto.nombre))
+                return listaProductos
+                break
+            else:
+                contador += 1
 
