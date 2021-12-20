@@ -2,9 +2,6 @@ from EVA2.producto import Producto
 from EVA2.boleta import Boleta
 
 
-
-
-
 #Antes de agregarlo deberíamos hacer las comprobaciones correspondientes
 
 def validarNumero(pregunta):
@@ -26,26 +23,6 @@ def validarNumero(pregunta):
         else:
             break
     return numero
-
-def generarBoletaVenta(numBoleta):
-    txt = "\nBoleta N°{}\n".format(numBoleta)
-    txt += "Detalle de compra:\n"
-    total = 0
-    contadorProducto = 1
-    for boleta in listaBoleta:
-        if boleta.numero == numBoleta:
-            txt += "{}. ".format(contadorProducto)
-            txt += boleta.mostrarDetalle()
-            total += boleta.devolverSubtotal()
-            contadorProducto += 1
-
-    txt += "El total de la compra es = ${:.0f}".format(total)
-    return txt
-
-
-
-
-
 
 
 listaProductos = []
@@ -84,18 +61,6 @@ while True:
     while opcion < 1 or opcion > 4:
         opcion = validarNumero("Ingrese una opción (1-4): ")
 
-# 1. Mantenedor de productos
-    # 1.1 Agregar producto (nuevo) - LISTO
-    # 1.2 Mostrar producto por ID - LISTO
-    # 1.3 Mostrar listado completo de productos - LISTO
-    # 1.4 Actualizar un producto (Nombre - Stock - Proveedor - Categoria) - FALTA
-    # 1.5 Eliminar un producto - FALTA
-# 2. Mantenedor de precios --- LISTO
-    # 2.1 Mostrar precio por ID de producto --- LISTO...?
-    # 2.2 Actualizar precio por ID de producto (Precio - Precio ganancia) --- LISTO...?
-# 3. Generar boleta (venta) - FALTA FORMATO TABLA, FORMATO MILLARES LISTO
-# 4. Registro de boletas emitidas - LISTO
-
     if opcion==1:
         print("\nMantenedor de productos/precios")
         print("1. Agregar producto")
@@ -113,13 +78,13 @@ while True:
             print("\nID nuevo producto: ", nuevoProductoId)
             nombre = input("\nIngrese nombre del producto: ")
             nombre = nombre.lower()
-            preciolista = int(input("Ingrese precio: "))
+            preciolista = validarNumero("Ingrese precio: ")
             while preciolista < 1:
-                preciolista = int(input("Ingrese precio: "))
-            ganancia = int(input("Ingrese porcentaje de ganancia %: "))
+                preciolista = validarNumero("Ingrese precio: ")
+            ganancia = validarNumero("Ingrese porcentaje de ganancia %: ")
             while ganancia < 1:
-                ganancia = int(input("Ingrese porcentaje de ganancia %: "))
-            stock = int(input("Ingrese stock: "))
+                ganancia = validarNumero("Ingrese porcentaje de ganancia %: ")
+            stock = validarNumero("Ingrese stock: ")
             while stock < 1:
                 stock = int(input("Ingrese stock: "))
             proveedor = input("Ingrese proveedor: ")
