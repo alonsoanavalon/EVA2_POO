@@ -27,14 +27,6 @@ class Producto(Precio):
 
         return txt
 
-    def actualizarPrecio (self, nuevoPrecio, nuevaGanancia):
-        if int(nuevoPrecio) and int(nuevoPrecio) > 0:
-            ganancia = (nuevaGanancia/100) + 1
-            self.precio = ganancia * nuevoPrecio
-            return print("El precio ha sido actualizado con éxito")
-        else:
-            error = print("El producto no ha podido ser actualizado")
-            return error
 
     def restarStock (self, cantidad):
         if int(cantidad) and int(cantidad) > 0:
@@ -80,20 +72,32 @@ class Producto(Precio):
         idBuscar = idproducto
         for producto in listaProductos:
             if producto.idproducto == idBuscar:
-                return print(producto)
+                return print(producto.mostrarProducto())
 
     def traerProductos(listaProductos):
         for producto in listaProductos:
             print(producto.mostrarProducto())
 
-    def actualizarProducto(idproducto, nombre, stock, idprecio, preciolista, ganancia, listaProductos, proveedor,
-                           categoria):
+    def actualizarProducto(idproducto, nombre, stock, preciolista, ganancia, proveedor,
+                           categoria, listaProductos):
         idBuscar = idproducto
         for producto in listaProductos:
             if producto.idproducto == idBuscar:
                 producto.nombre = nombre
                 producto.stock = stock
-                producto.idprecio = idprecio
+                producto.preciolista = preciolista
+                producto.ganancia = (ganancia / 100) + 1
+                producto.precio = producto.ganancia * producto.preciolista
+                producto.proveedor = proveedor
+                producto.categoria = categoria
+                return producto.mostrarProducto()
+
+    def actualizarProductoPorNombre(nombreBuscar, nombre, stock, preciolista, ganancia, proveedor,
+                           categoria, listaProductos):
+        for producto in listaProductos:
+            if producto.nombre == nombreBuscar:
+                producto.nombre = nombre
+                producto.stock = stock
                 producto.preciolista = preciolista
                 producto.ganancia = (ganancia / 100) + 1
                 producto.precio = producto.ganancia * producto.preciolista
@@ -103,15 +107,11 @@ class Producto(Precio):
 
     def eliminarProducto(idproducto, listaProductos):
         idBuscar = idproducto
-        contador = 0
         for producto in listaProductos:
-            print("Vuelta n°{}".format(contador))
             if producto.idproducto == idBuscar:
-                listaProductos.pop(contador)
-                print("Se ha eliminado el producto con id {}, contador {}, nombre {}".format(producto.idproducto,
-                                                                                             contador, producto.nombre))
+                listaProductos.pop(idBuscar-1)
+                print("Se ha eliminado el producto con id {}".format(producto.idproducto))
                 return listaProductos
                 break
-            else:
-                contador += 1
+
 

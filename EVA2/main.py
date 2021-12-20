@@ -3,6 +3,8 @@ from EVA2.boleta import Boleta
 
 
 
+
+
 #Antes de agregarlo deberíamos hacer las comprobaciones correspondientes
 
 def validarNumero(pregunta):
@@ -72,16 +74,15 @@ Producto.traerProductos(listaProductos)
 while True:
     productoEncontrado = False
     print("\nMenú de Opciones")
-    print("1. Mantenedor de Productos")
-    print("2. Mantenedor de precios")
-    print("3. Generar boleta (venta)")
-    print("4. Registro de boletas emitidas")
-    print("5. Salir/Finalizar")
+    print("1. Mantenedor de Productos/Precios")
+    print("2. Generar boleta (venta)")
+    print("3. Buscar una boleta emitida")
+    print("4. Salir/Finalizar")
 
-    opcion = validarNumero("Ingrese una opción (1-5): ")
+    opcion = validarNumero("Ingrese una opción (1-4): ")
 
-    while opcion < 1 or opcion > 5:
-        opcion = validarNumero("Ingrese una opción (1-5): ")
+    while opcion < 1 or opcion > 4:
+        opcion = validarNumero("Ingrese una opción (1-4): ")
 
 # 1. Mantenedor de productos
     # 1.1 Agregar producto (nuevo) - LISTO
@@ -96,7 +97,7 @@ while True:
 # 4. Registro de boletas emitidas - LISTO
 
     if opcion==1:
-        print("\nMantenedor de productos")
+        print("\nMantenedor de productos/precios")
         print("1. Agregar producto")
         print("2. Mostrar producto por ID")
         print("3. Mostrar listado completo de productos")
@@ -140,7 +141,7 @@ while True:
         elif opcionProducto == 4:
 
             Producto.traerProductos(listaProductos)
-            print("\nActualizando precio...")
+            print("\nActualizando producto...")
             print("1. Buscar por ID")
             print("2. Buscar por Nombre")
             buscar = validarNumero("Ingrese opción (1-2): ")
@@ -153,11 +154,14 @@ while True:
                     idBuscar = validarNumero("Ingrese un ID entre {} y {}:".format(1, len(listaProductos)))
                 for articulo in listaProductos:
                     if articulo.idproducto == idBuscar:
-                        print("Precio a modificar: ", articulo)
+                        nuevoNombre = input("Ingrese el nuevo nombre: ")
+                        nuevoStock = validarNumero("Ingrese el nuevo stock del producto: ")
+                        nuevoProveedor = input("Ingrese el nuevo proveedor: ")
+                        nuevaCategoria = input("Ingrese la nueva categoría: ")
                         nuevoPrecio = validarNumero("Ingrese nuevo precio: ")
                         nuevaGanancia = validarNumero("Ingrese un nuevo porcentaje de ganancia en número: ")
-                        articulo.actualizarPrecio(nuevoPrecio, nuevaGanancia)
-                        print("Precio modificado: ", articulo)
+                        Producto.actualizarProducto(idBuscar,nuevoNombre, nuevoStock, nuevoPrecio, nuevaGanancia, nuevoProveedor, nuevaCategoria, listaProductos)
+
 
             if buscar == 2:
                 nombreBuscar = input("Ingrese nombre: ")
@@ -166,59 +170,23 @@ while True:
                     nombreBuscar = input("Ingrese nombre: ")
                 for articulo in listaProductos:
                     if articulo.nombre == nombreBuscar:
-                        print("Precio a modificar: ", articulo)
+                        nuevoNombre = input("Ingrese el nuevo nombre: ")
+                        nuevoStock = validarNumero("Ingrese el nuevo stock del producto: ")
+                        nuevoProveedor = input("Ingrese el nuevo proveedor: ")
+                        nuevaCategoria = input("Ingrese la nueva categoría: ")
                         nuevoPrecio = validarNumero("Ingrese nuevo precio: ")
-                        articulo.actualizarPrecio(nuevoPrecio)
-                        print("Precio modificado: ", articulo)
+                        nuevaGanancia = validarNumero("Ingrese un nuevo porcentaje de ganancia en número: ")
+                        Producto.actualizarProductoPorNombre(nombreBuscar, nuevoNombre, nuevoStock, nuevoPrecio, nuevaGanancia,
+                                                    nuevoProveedor, nuevaCategoria, listaProductos)
 
-        #elif opcionProducto == 5:
+        elif opcionProducto == 5:
+            idEliminar = validarNumero("Ingrese el id del producto a eliminar: ")
+            Producto.eliminarProducto(idEliminar, listaProductos)
 
-    elif opcion == 2:
 
-        print("\nMantenedor de precios")
 
-        print("1. Consultar precio de producto por ID")
 
-        print("2. Actualizar precio de producto por ID (Precio - Precio ganancia)")
-
-        seleccionPrecio = validarNumero("Ingrese opción (1-2): ")
-
-        while seleccionPrecio > 2 or seleccionPrecio < 1:
-            seleccionPrecio = validarNumero("Ingrese opción (1-2): ")
-
-        if seleccionPrecio == 1:
-
-            idBuscar = validarNumero("Ingrese ID de producto:")
-
-            while idBuscar > len(listaProductos):
-                idBuscar = validarNumero("Ingrese un ID entre {} y {}:".format(1, len(listaProductos)))
-
-            for articulo in listaProductos:
-
-                if articulo.idproducto == idBuscar:
-                    print("Artículo consultado: ", articulo, "\nPrecio consultado: {:,.0f} ".format(articulo.precio).replace(',','.'))
-
-        if seleccionPrecio == 2:
-
-            idBuscar = validarNumero("Ingrese ID de producto:")
-
-            while idBuscar > len(listaProductos):
-                idBuscar = validarNumero("Ingrese un ID entre {} y {}:".format(1, len(listaProductos)))
-
-            for articulo in listaProductos:
-
-                if articulo.idproducto == idBuscar:
-                    print("Precio a modificar: ", articulo)
-
-                    nuevoPrecio = validarNumero("Ingrese nuevo precio: ")
-
-                    nuevaGanancia = validarNumero("Ingrese un nuevo porcentaje de ganancia en número: ")
-
-                    articulo.actualizarPrecio(nuevoPrecio, nuevaGanancia)
-
-                    print("Precio modificado: ", articulo)
-
-    elif opcion==3:
+    elif opcion==2:
         numeroBoleta = 1
         carritoCompra = []
 
@@ -375,26 +343,92 @@ while True:
                     listaBoleta.append(carritoCompra)
                     for boleta in listaBoleta:
                         if boleta[0].idboleta == idBoleta:
+                            tabla = """ 
+                            \tEMISION DE BOLETA
+                             _________________________________________________
+                            | Python Store                                    |
+                            | Ferretería                                      |
+                            |         Boleta de ventas y servicios            |
+                            |  Boleta Nº{:3d}                                   |
+                            |_________________________________________________|
+                            | Cantidad | Descripción    |  Precio  | Subtotal |
+                            |__________|________________|__________|__________|
+                            """.format(idBoleta)
+
+                            total = 0
+
                             for producto in boleta:
-                                print(producto.mostrarCarrito())
+                                tabla += "| {:3d}      |{:16s}|{:7,.0f}   |{:7,.0f}   |".format(producto.cantidad, producto.producto.nombre, producto.precio, producto.subtotal).replace(',','.')
+                                total += producto.subtotal
+                                tabla += "\n"
+                                tabla += "\t\t\t\t\t\t\t"
+
+                            tabla += "|__________|________________|__________|__________|"
+                            tabla += """\n
+                            \t\t\t\t\t\t\t\t Total Neto: {:,.0f}
+                            \t\t\t\t\t\t\t\t IVA       : {:,.0f}
+                            \t\t\t\t\t\t\t\t A Pagar   : {:,.0f}
+                            """.format(total, total * 0.19, total + total * 0.19).replace(',','.')
+
+                            print(tabla)
+
                     idBoleta += 1
                     respuesta = False
 
-    elif opcion == 4:
+
+    elif opcion == 3:
         if len(listaBoleta) < 1:
             print("No existen boletas emitidas...")
-        for boleta in listaBoleta:
-            print("Boleta N°{}".format(boleta[0].idboleta))
-            for producto in boleta:
-                print(producto.mostrarCarrito())
-            print("\n")
+        else:
+            idBoleta = validarNumero("Ingrese la boleta a buscar: ")
+            while idBoleta < 1 or idBoleta > len(listaBoleta):
+                idBoleta = validarNumero("Existen {} Boletas, ingrese un número válido ".format(len(listaBoleta)))
+            print("Buscando boleta {}...".format(idBuscar))
+            for boleta in listaBoleta:
+                print("Boleta N°{}".format(boleta[0].idboleta))
+                for producto in boleta:
+                    if producto.idboleta == idBoleta:
+                        tabla = """ 
+                        \tEMISION DE BOLETA EMITIDA
+                         _________________________________________________
+                        | Python Store                                    |
+                        | Ferretería                                      |
+                        |         Boleta de ventas y servicios            |
+                        |  Boleta Nº{:3d}                                   |
+                        |_________________________________________________|
+                        | Cantidad | Descripción    |  Precio  | Subtotal |
+                        |__________|________________|__________|__________|
+                        """.format(idBoleta)
 
-    elif opcion == 5:
+                        total = 0
+
+                        for producto in boleta:
+                            tabla += "| {:3d}      |{:16s}|{:7,.0f}   |{:7,.0f}   |".format(producto.cantidad,
+                                                                                            producto.producto.nombre,
+                                                                                            producto.precio,
+                                                                                            producto.subtotal).replace(
+                                ',', '.')
+                            total += producto.subtotal
+                            tabla += "\n"
+                            tabla += "\t\t\t\t\t\t"
+
+                        tabla += "|__________|________________|__________|__________|"
+                        tabla += """\n
+                        \t\t\t\t\t\t\t\t Total Neto: {:,.0f}
+                        \t\t\t\t\t\t\t\t IVA       : {:,.0f}
+                        \t\t\t\t\t\t\t\t A Pagar   : {:,.0f}
+                        """.format(total, total * 0.19, total + total * 0.19).replace(',', '.')
+
+                        print(tabla)
+                print("\n")
+    elif opcion == 4:
         print("Cerrando Programa...")
         break
 
     else:
         print("\nProceso finalizado....")
         break
+
+
 
 
